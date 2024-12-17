@@ -7,5 +7,7 @@ import java.util.ArrayList;
 public class DrawPile {
     private ArrayList<Card> cards;
 
-
+    DrawPile() {
+        for (int i=0; i <)
+    }
 }
