@@ -1,9 +1,9 @@
-package cards;
+package game.cards;
 
 public abstract class Card {
     private Color color;
 
-    Card(Color color) {
+    public Card(Color color) {
         this.color = color;
     }
 

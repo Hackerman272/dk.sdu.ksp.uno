@@ -1,12 +1,10 @@
-package cards;
-
-import java.lang.reflect.Array;
+package game.cards;
 
 public class NumberCard extends Card {
     private int number;
     private int[] ALLOWED_NUMBERS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    NumberCard(Color color, int number) {
+    public NumberCard(Color color, int number) {
         super(color);
         if (isValid(number)) {
             this.number = number;
