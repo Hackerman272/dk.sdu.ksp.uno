@@ -18,12 +18,10 @@ public class WildDraw4Card extends ActionCard {
     @Override
     public void action(UnoGame game) {
         Player currentPlayer = game.getCurrentPlayer();
-        // Validate that player has no matching colors
         if (currentPlayer.hasMatchingColorCard(game.getDiscardPile().getTopCard().getColor())) {
             throw new IllegalStateException("Cannot play Wild Draw 4 when you have matching colors");
         }
 
-        // Set new color and make next player draw 4 cards
         Color newColor = currentPlayer.announceCardColor();
         this.setColor(newColor);
 
@@ -31,7 +29,6 @@ public class WildDraw4Card extends ActionCard {
         for (int i = 0; i < 4; i++) {
             nextPlayer.drawCardFrom(game.getDrawPile());
         }
-        // Skip next player's turn
         game.skipNextPlayer();
     }
 

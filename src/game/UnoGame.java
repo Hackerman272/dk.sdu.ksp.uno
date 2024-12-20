@@ -9,9 +9,8 @@ import game.actioncards.ActionCard;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Collections;
 
-public class UnoGame implements Descriptable {
+public class UnoGame implements Describable {
     private ArrayList<Player> players;
     private DrawPile drawPile;
     private DiscardPile discardPile;
@@ -46,14 +45,12 @@ public class UnoGame implements Descriptable {
         while (winner == null) {
             printGameStatus();
 
-            // Check if player needs to draw a card
             if (!currentPlayer.hasPlayableHand(discardPile.getTopCard())) {
                 if (drawPile.isEmpty()) {
                     shuffleDiscardPile();
                 }
                 currentPlayer.drawCardFrom(drawPile);
 
-                // If still no playable cards after drawing, pass turn
                 if (!currentPlayer.hasPlayableHand(discardPile.getTopCard())) {
                     passTurn();
                     continue;
@@ -65,7 +62,6 @@ public class UnoGame implements Descriptable {
             try {
                 Card playedCard = currentPlayer.playCard(discardPile);
 
-                // Validate the played card
                 if (!currentPlayer.canPlayCard(playedCard, discardPile.getTopCard()) ||
                         (playedCard instanceof WildDraw4Card && !isValidWildCardPlay(playedCard, currentPlayer))) {
                     throw new IllegalStateException("Invalid card play");
@@ -73,12 +69,10 @@ public class UnoGame implements Descriptable {
 
                 System.out.println(currentPlayer.getName() + " played: " + playedCard);
 
-                // Handle action cards
                 if (playedCard instanceof ActionCard) {
                     ((ActionCard) playedCard).action(this);
                 }
 
-                // Check for winner
                 if (currentPlayer.getHand().isEmpty()) {
                     winner = currentPlayer;
                     break;
@@ -87,11 +81,11 @@ public class UnoGame implements Descriptable {
                 passTurn();
 
             } catch (IllegalStateException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("\nError: " + e.getMessage());
             }
         }
 
-        System.out.println("Winner: " + winner.getName());
+        System.out.println("\nWinner: " + winner.getName());
     }
 
 
@@ -100,15 +94,6 @@ public class UnoGame implements Descriptable {
             for (int i = 0; i < 7; i++) {
                 player.receiveCard(drawPile.draw());
             }
-        }
-    }
-
-    private void drawIfNoPlayableHand(Player player) {
-        if (!player.hasPlayableHand(discardPile.getTopCard())) {
-            if (drawPile.isEmpty()) {
-                shuffleDiscardPile();
-            }
-            player.drawCardFrom(drawPile);
         }
     }
 
@@ -121,14 +106,15 @@ public class UnoGame implements Descriptable {
         }
     }
 
-    private void shuffleDiscardPile() {
+    public void shuffleDiscardPile() {
         if (drawPile.isEmpty()) {
             drawPile = discardPile.shuffleAndTurnAround();
         }
     }
 
+
     private void printGameStatus() {
-        System.out.println("Current player: " + currentPlayer.getName());
+        System.out.println("\nCurrent player: " + currentPlayer.getName());
         System.out.println("Top card: " + discardPile.getTopCard());
         System.out.println("Draw pile size: " + drawPile.getSize());
     }
@@ -140,10 +126,6 @@ public class UnoGame implements Descriptable {
     @Override
     public String getDescription() {
         return "game.game.cards.cards.UnoGame with " + players.size() + " players";
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
     }
 
     public DrawPile getDrawPile() {
@@ -179,4 +161,5 @@ public class UnoGame implements Descriptable {
             return players.get((currentIndex - 1 + players.size()) % players.size());
         }
     }
+
 }

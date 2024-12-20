@@ -1,5 +1,5 @@
 package game;
 
-public interface Descriptable {
+public interface Describable {
     String getDescription();
 }

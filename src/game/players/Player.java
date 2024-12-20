@@ -1,6 +1,6 @@
 package game.players;
 
-import game.Descriptable;
+import game.Describable;
 import game.actioncards.WildDraw4Card;
 import game.cards.Card;
 import game.cards.Color;
@@ -9,7 +9,7 @@ import game.piles.DiscardPile;
 
 import java.util.ArrayList;
 
-public abstract class Player implements Descriptable {
+public abstract class Player implements Describable {
     private String name;
     private ArrayList<Card> hand;
 
@@ -30,9 +30,9 @@ public abstract class Player implements Descriptable {
         hand.add(pile.draw());
     }
 
-    public boolean hasPlayableHand(Card topCard) {
-        for (Card card : hand) {
-            if (card.matches(topCard)) {
+    public boolean hasPlayableHand(Card card) {
+        for (Card c : hand) {
+            if (c.matches(card)) {
                 return true;
             }
         }
@@ -55,6 +55,7 @@ public abstract class Player implements Descriptable {
 
     public abstract Color announceCardColor();
 
+
     @Override
     public String getDescription() {
         return "Player: " + name + " with " + hand.size() + " cards";
@@ -74,7 +75,6 @@ public abstract class Player implements Descriptable {
             return false;
         }
 
-        // Special validation for Wild Draw 4
         if (card instanceof WildDraw4Card) {
             return !hasMatchingColorCard(topCard.getColor());
         }

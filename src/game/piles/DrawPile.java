@@ -1,6 +1,6 @@
 package game.piles;
 
-import game.Descriptable;
+import game.Describable;
 import game.actioncards.*;
 import game.cards.Card;
 import game.cards.NumberCard;
@@ -9,12 +9,12 @@ import game.cards.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DrawPile implements Descriptable {
+public class DrawPile implements Describable {
     private ArrayList<Card> cards;
 
     public DrawPile() {
-        cards = new ArrayList<>();
-        initializeCards();
+        this.cards = new ArrayList<>();
+        this.initializeCards();
         shuffle();
     }
 
@@ -27,7 +27,6 @@ public class DrawPile implements Descriptable {
                 cards.add(new NumberCard(color, i));
             }
 
-            // Two of each action card per color
             cards.add(new Draw2(color));
             cards.add(new Draw2(color));
 
@@ -38,13 +37,11 @@ public class DrawPile implements Descriptable {
             cards.add(new SkipCard(color));
         }
 
-        // Add wild cards (4 of each type)
         for (int i = 0; i < 4; i++) {
             cards.add(new WildCard());
             cards.add(new WildDraw4Card());
         }
     }
-
 
     private void shuffle() {
         Collections.shuffle(cards);

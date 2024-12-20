@@ -1,12 +1,12 @@
 package game.piles;
 
-import game.Descriptable;
+import game.Describable;
 import game.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DiscardPile implements Descriptable {
+public class DiscardPile implements Describable {
     private ArrayList<Card> cards;
 
     public DiscardPile(Card initialCard) {
@@ -18,12 +18,10 @@ public class DiscardPile implements Descriptable {
         return cards.get(cards.size() - 1);
     }
 
-    public boolean addCard(Card card) {
+    public void addCard(Card card) {
         if (card.matches(getTopCard())) {
             cards.add(card);
-            return true;
         }
-        return false;
     }
 
     public DrawPile shuffleAndTurnAround() {
@@ -34,6 +32,7 @@ public class DiscardPile implements Descriptable {
         cards.add(topCard);
         return new DrawPile();
     }
+
 
     @Override
     public String getDescription() {
